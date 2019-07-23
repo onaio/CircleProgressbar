@@ -2,10 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: "com.jfrog.bintray"
 
-group = "com.emredavarci"
+group = "io.ona"
 version = '0.1.0'
 def home = System.properties['user.home']
-
 
 android {
     compileSdkVersion 26
@@ -43,8 +42,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }
-
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
 
 publishing {
     publications {
