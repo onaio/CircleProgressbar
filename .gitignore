@@ -80,3 +80,7 @@ lint/reports/*.iml
 
 .DS_Store
 
+# Eclipse project files
+.classpath
+.project
+.settings
