@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: "com.jfrog.bintray"
 
-group = "io.ona"
+group = "io.ona.circle-progressbar"
 version = '0.1.0'
 def home = System.properties['user.home']
 
@@ -80,7 +80,7 @@ bintray {
     key = System.getenv('BINTRAY_KEY') // Get bintray Secret Key
     configurations = ['archives']
     pkg {
-        repo = 'CircleProgressBar'
+        repo = 'CircleProgressbar'
         name = project.name
         userOrg = 'ona'
         licenses = ['Apache-2.0']
