@@ -12,7 +12,7 @@ apply plugin: 'maven-publish'
 
 
 android {
-    compileSdk 34
+    compileSdk 33
     defaultConfig {
         minSdkVersion 16
         versionCode 1
@@ -32,8 +32,8 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:26.+'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     testImplementation 'junit:junit:4.13.2'
 }
@@ -54,7 +54,7 @@ publishing {
 
             groupId = 'com.emredavarci'
             artifactId = 'circleprogressbar'
-            version = '1.0.2'
+            version = '1.0.7'
 
             // Specify the artifact to be published
             artifact(layout.buildDirectory.file("outputs/aar/app-debug.aar"))
