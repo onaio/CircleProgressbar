@@ -54,7 +54,7 @@ publishing {
 
             groupId = 'com.emredavarci'
             artifactId = 'circleprogressbar'
-            version = '1.0.7'
+            version = '1.0.8'
 
             // Specify the artifact to be published
             artifact(layout.buildDirectory.file("outputs/aar/app-debug.aar"))
