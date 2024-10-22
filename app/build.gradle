@@ -37,16 +37,15 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 }
 
-def siteUrl = 'https://github.com/emre1512/CricleProgressBar'
-def gitUrl = 'https://github.com/emre1512/CricleProgressBar.git'
-group = "com.emredavarci"
+def siteUrl = 'https://github.com/onaio/CircleProgressbar'
+def gitUrl = 'https://github.com/onaio/CircleProgressbar.git'
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = 'com.emredavarci'
+            groupId = 'org.smartregister'
             artifactId = 'circleprogressbar'
-            version = '1.0.17'
+            version = '1.0.16-SNAPSHOT'
 
             afterEvaluate {
                 from components.release
@@ -54,7 +53,7 @@ publishing {
 
             pom {
                 packaging = 'aar'
-                name = 'com.emredavarci.circleprogressbar'
+                name = 'org.smartregister.circleprogressbar'
                 description = 'Circle ProgressBar'
                 url = siteUrl
 
@@ -82,8 +81,13 @@ publishing {
 
     repositories {
         maven {
-            // Local repository (can be replaced with remote repository URL)
-            url = uri(layout.buildDirectory.dir("repo"))
+            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+
+            // Use credentials for authentication
+            credentials {
+                username = project.findProperty("sonatypeUsername") ?: ""
+                password = project.findProperty("sonatypePassword") ?: ""
+            }
         }
     }
 }
