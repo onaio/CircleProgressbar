@@ -1,21 +1,11 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven' // maven repository e eklememiz için gerekli gradle plugin
-apply plugin: "com.jfrog.bintray" // bintray yapılandırması yapmamız için gerekli gradle plugin
-// Kodların devamında göreceğiniz hazır yazılmış gradle tasklerini getiren yapıda, güncellenmesi gereken yerleri
-// bu şekilde düzenliyoruz.
-ext {
-    PUBLISH_GROUP_ID = 'com.emredavarci'
-    PUBLISH_ARTIFACT_ID = 'circleprogressbar'
-    PUBLISH_VERSION = '1.0.4'
-}
-
+apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    compileSdkVersion 30
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -26,56 +16,75 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        exclude 'AndroidManifest.xml'
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2') {
         exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
+    }
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+    testImplementation 'junit:junit:4.13.2'
 }
 
-// Aşağıda ki linke girip bakarsanız aslında gradle task yazılmış olduğunu görürsünüz. Bu yazılan task ler ile
-// oluşturmuş olduğumuz module dosyalarından gerekli dosyalara dönüşümlerini sağlıyoruz.
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
-
-def siteUrl = 'https://github.com/emre1512/CricleProgressBar'      // Homepage URL of the library
-def gitUrl = 'https://github.com/emre1512/CricleProgressBar.git'  // Git repository URL
+def siteUrl = 'https://github.com/emre1512/CricleProgressBar'
+def gitUrl = 'https://github.com/emre1512/CricleProgressBar.git'
 group = "com.emredavarci"
 
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'com.emredavarci'
+            artifactId = 'circleprogressbar'
+            version = '1.0.17'
 
-                name 'com.emredavarci:circleprogressbar' // TODO
-                description = 'Circle ProgressBar' // TODO
-                url siteUrl
+            afterEvaluate {
+                from components.release
+            }
 
-                // Set your license
+            pom {
+                packaging = 'aar'
+                name = 'com.emredavarci.circleprogressbar'
+                description = 'Circle ProgressBar'
+                url = siteUrl
+
                 licenses {
                     license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
                     }
                 }
                 developers {
                     developer {
-                        id 'emre1512' // TODO
-                        name 'M. Emre Davarci' // TODO
-                        email 'emre151291@gmail.com' // TODO
+                        id = 'emre1512'
+                        name = 'M. Emre Davarci'
+                        email = 'emre151291@gmail.com'
                     }
                 }
                 scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
+                    connection = gitUrl
+                    developerConnection = gitUrl
+                    url = siteUrl
                 }
             }
         }
     }
+
+    repositories {
+        maven {
+            // Local repository (can be replaced with remote repository URL)
+            url = uri(layout.buildDirectory.dir("repo"))
+        }
+    }
 }
+
